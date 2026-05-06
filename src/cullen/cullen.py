@@ -63,10 +63,7 @@ def cullen(
         item.rename(new_path)
 
 
-
-
-
 if __name__ == '__main__':
-    app("/Users/justin/photos/stages/stage1.filter/26.03.21.hindemith_rep".split())
+    app("/Users/justin/photos/stages/stage1.filter/26.04.17.wolfday".split())
 
 
