@@ -15,3 +15,6 @@ cullen = "cullen.cullen:app"
 
 [tool.setuptools.packages.find]
 where = ["src"]
+
+[tool.semantic_release]
+major_on_zero = false
