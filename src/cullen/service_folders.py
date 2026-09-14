@@ -1,0 +1,17 @@
+SERVICE_FOLDERS = {
+    "closed",
+    "cullen",
+    "drive",
+    "justin",
+    "kot_i_kit",
+    "meeting",
+    "my_people",
+    "not_signed",
+    "odd_selection",
+    "ondemand",
+    "photoclub",
+    "progress",
+    "small",
+    "timelapse",
+    "to_select",
+}
