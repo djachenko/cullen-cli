@@ -11,6 +11,10 @@ dependencies = [
     "rich",
     "justin_utils",
 ]
+description = ""
+readme = "README.md"
+license = "MIT"
+authors = [{name = "Igor Djachenko"}]
 
 [project.scripts]
 cullen = "cullen.main:app"
@@ -19,6 +23,7 @@ cullen = "cullen.main:app"
 test = [
     "pytest",
 ]
+release = ["build >= 1.5", "python-semantic-release >= 10.6"]
 
 [tool.setuptools.packages.find]
 where = ["src"]
@@ -29,3 +34,20 @@ testpaths = ["tests"]
 
 [tool.semantic_release]
 major_on_zero = false
+version_toml = ["pyproject.toml:project.version"]
+tag_format = "v{version}"
+branch = "master"
+commit_message = "chore(release): v{version} [skip ci]"
+allow_zero_version = true
+
+[project.urls]
+Homepage = "https://github.com/djachenko/cullen-cli"
+Source = "https://github.com/djachenko/cullen-cli"
+Documentation = "https://github.com/djachenko/cullen-cli#readme"
+Issues = "https://github.com/djachenko/cullen-cli/issues"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/cullen-cli"]
+
+[tool.mypy]
+strict = true
