@@ -8,13 +8,24 @@ version = "0.1.0"
 requires-python = ">=3.11"
 dependencies = [
     "typer",
+    "rich",
+    "justin_utils",
 ]
 
 [project.scripts]
-cullen = "cullen.cullen:app"
+cullen = "cullen.main:app"
+
+[project.optional-dependencies]
+test = [
+    "pytest",
+]
 
 [tool.setuptools.packages.find]
 where = ["src"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src", "tests"]
+testpaths = ["tests"]
 
 [tool.semantic_release]
 major_on_zero = false
