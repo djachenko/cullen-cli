@@ -3,8 +3,8 @@ from pathlib import Path
 import pytest
 from conftest import Photoset, Tree
 
-from cullen.commands.cull import cull
-from cullen.commands.flop import flop
+from cullen._cli.commands.cull import cull
+from cullen._cli.commands.flop import flop
 from cullen.errors import DecisionsFileError, FlopError
 
 

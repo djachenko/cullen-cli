@@ -1,6 +1,6 @@
 import pytest
 
-from cullen.ui import Console, PlainConsole, RichConsole, make_console
+from cullen._cli.ui import Console, PlainConsole, RichConsole, make_console
 
 
 class TestPlainConsole:

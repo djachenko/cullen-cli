@@ -3,8 +3,8 @@ from pathlib import Path
 import pytest
 from typer.testing import CliRunner
 
+from cullen._cli.main import app, main
 from cullen.errors import DecisionsFileError, FlopError
-from cullen.main import app, main
 
 runner = CliRunner()
 

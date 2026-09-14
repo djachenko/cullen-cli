@@ -7,10 +7,8 @@ from typing import Annotated
 from justin_utils.util import bfs
 from typer import Argument, Option, Typer
 
-from cullen.decisions_file import load
-from cullen.errors import DecisionsFileMissingError
-from cullen.service_folders import SERVICE_FOLDERS
-from cullen.ui import Console, Task, make_console
+from cullen import SERVICE_FOLDERS, DecisionsFileMissingError, load
+from cullen._cli.ui import Console, Task, make_console
 
 app = Typer()
 

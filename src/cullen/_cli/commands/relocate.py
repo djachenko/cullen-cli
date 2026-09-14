@@ -6,9 +6,8 @@ from justin_utils.dictable import DictableError, frompath
 from justin_utils.util import bfs
 from typer import Argument, Typer
 
-from cullen.decisions_file import DecisionsFile
-from cullen.errors import DecisionsFileError
-from cullen.ui import Console, Task, make_console
+from cullen import DecisionsFile, DecisionsFileError
+from cullen._cli.ui import Console, Task, make_console
 
 app = Typer()
 

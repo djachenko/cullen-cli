@@ -5,7 +5,7 @@ from pathlib import Path
 import pytest
 from conftest import FileTree
 
-from cullen.commands.relocate import relocate
+from cullen._cli.commands.relocate import relocate
 from cullen.errors import DecisionsFileError
 
 
