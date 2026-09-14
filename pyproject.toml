@@ -70,7 +70,6 @@ ignore = [
     "ANN401",  # Any is the honest annotation for type introspection and decorators
     "C416",    # explicit comprehension reads better than a dict() cast
     "C420",    # explicit comprehension reads better than dict.fromkeys
-    "RUF003",  # comments are written in Russian
 ]
 
 [tool.ruff.lint.flake8-bugbear]

@@ -79,8 +79,8 @@ def relocate(
                     return []
 
             try:
-                # симлинки не разворачиваем: /Volumes/Macintosh HD ведёт на /,
-                # а внутри снова /Volumes — обход зациклился бы навсегда
+                # symlinks are not followed: /Volumes/Macintosh HD points to /,
+                # which contains /Volumes again, and the walk would never end
                 return [item for item in folder.iterdir() if item.is_dir() and not item.is_symlink()]
             except PermissionError:
                 return []
