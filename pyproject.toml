@@ -8,6 +8,8 @@ version = "0.0.0"
 requires-python = ">=3.11"
 dependencies = [
     "justin_utils",
+    "typer",
+    "rich",
 ]
 description = ""
 readme = "README.md"
@@ -18,12 +20,7 @@ authors = [{name = "Igor Djachenko"}]
 cullen = "cullen._cli.main:main"
 
 [project.optional-dependencies]
-cli = [
-    "typer",
-    "rich",
-]
 test = [
-    "cullen[cli]",
     "pytest",
     "ruff >= 0.15, < 0.16",
     "mypy",
