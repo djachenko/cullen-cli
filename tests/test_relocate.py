@@ -93,7 +93,7 @@ class TestRelocate:
 
         stages.mkdir()
 
-        (downloads / "readme.txt").write_text("не json")
+        (downloads / "readme.txt").write_text("not json")
 
         relocate(downloads, stages)
 
