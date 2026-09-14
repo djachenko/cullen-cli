@@ -48,5 +48,36 @@ Source = "https://github.com/djachenko/cullen-cli"
 Documentation = "https://github.com/djachenko/cullen-cli#readme"
 Issues = "https://github.com/djachenko/cullen-cli/issues"
 
+[tool.ruff]
+line-length = 120
+
+[tool.ruff.lint]
+select = [
+    "E",    # pycodestyle
+    "W",    # pycodestyle warnings
+    "F",    # pyflakes
+    "I",    # isort
+    "UP",   # pyupgrade
+    "B",    # bugbear
+    "C4",   # comprehensions
+    "COM",  # trailing commas
+    "DTZ",  # naive datetime
+    "BLE",  # blind except
+    "ANN",  # annotations
+    "RUF",  # ruff-specific
+]
+ignore = [
+    "ANN401",  # Any is the honest annotation for type introspection and decorators
+    "C416",    # explicit comprehension reads better than a dict() cast
+    "C420",    # explicit comprehension reads better than dict.fromkeys
+    "RUF003",  # comments are written in Russian
+]
+
+[tool.ruff.lint.flake8-bugbear]
+extend-immutable-calls = ["typer.Argument", "typer.Option"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["ANN"]
+
 [tool.mypy]
 strict = true
