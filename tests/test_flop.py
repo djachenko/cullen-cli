@@ -1,12 +1,11 @@
 from pathlib import Path
 
 import pytest
-
 from conftest import Photoset, Tree
 
 from cullen.commands.cull import cull
-from cullen.errors import DecisionsFileError, FlopError
 from cullen.commands.flop import flop
+from cullen.errors import DecisionsFileError, FlopError
 
 
 class TestFlop:

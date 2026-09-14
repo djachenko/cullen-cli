@@ -1,24 +1,28 @@
 from contextlib import AbstractContextManager
 from dataclasses import dataclass
+from functools import partial
 from pathlib import Path
-
-from typer import Typer, Argument, Option
 from typing import Annotated
+
+from justin_utils.util import bfs
+from typer import Argument, Option, Typer
 
 from cullen.decisions_file import load
 from cullen.errors import DecisionsFileMissingError
 from cullen.service_folders import SERVICE_FOLDERS
 from cullen.ui import Console, Task, make_console
-from justin_utils.util import bfs
 
 app = Typer()
 
 
 @app.command()
 def cull(
-        paths: Annotated[list[Path], Argument()] = (Path("."),),
+        paths: Annotated[list[Path] | None, Argument()] = None,
         file: Annotated[Path, Option()] = Path("culled.json"),
 ) -> None:
+    if paths is None:
+        paths = [Path(".")]
+
     output = CullOutput(make_console())
 
     reports: list[Report] = []
@@ -42,7 +46,7 @@ def cull(
         with output.culling(path.name) as task:
             report = Report(task)
 
-            bfs(path, lambda folder: _handle_folder(folder, categories, reverse_mapping, report))
+            bfs(path, partial(_handle_folder, categories=categories, reverse_mapping=reverse_mapping, report=report))
 
         output.culled(path.name, report)
 

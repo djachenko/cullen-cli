@@ -3,11 +3,10 @@ from collections.abc import Callable
 from pathlib import Path
 
 import pytest
-
 from conftest import FileTree
 
-from cullen.errors import DecisionsFileError
 from cullen.commands.relocate import relocate
+from cullen.errors import DecisionsFileError
 
 
 @pytest.fixture

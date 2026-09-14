@@ -1,8 +1,8 @@
 from contextlib import AbstractContextManager
 from pathlib import Path
-
-from typer import Typer, Argument, Option
 from typing import Annotated
+
+from typer import Argument, Option, Typer
 
 from cullen.decisions_file import load
 from cullen.errors import FlopError
@@ -84,7 +84,7 @@ def _plan(files: list[Path], path: Path, categories: set[str]) -> list[tuple[Pat
 
         if relative_destination in sources:
             raise FlopError(
-                f"{sources[relative_destination]} and {relative_path} both land on {relative_destination}"
+                f"{sources[relative_destination]} and {relative_path} both land on {relative_destination}",
             )
 
         sources[relative_destination] = relative_path
