@@ -17,7 +17,7 @@ license = "MIT"
 authors = [{name = "Igor Djachenko"}]
 
 [project.scripts]
-cullen = "cullen.main:app"
+cullen = "cullen.main:main"
 
 [project.optional-dependencies]
 test = [
