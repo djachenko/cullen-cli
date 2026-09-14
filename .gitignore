@@ -5,3 +5,5 @@ src/cullen.egg-info/
 __pycache__/
 .idea/
 .repokit
+_claude
+CLAUDE.local.md
