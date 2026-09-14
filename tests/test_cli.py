@@ -1,6 +1,10 @@
+from pathlib import Path
+
+import pytest
 from typer.testing import CliRunner
 
-from cullen.main import app
+from cullen._cli.main import app, main
+from cullen.errors import DecisionsFileError, FlopError
 
 runner = CliRunner()
 
@@ -36,8 +40,8 @@ class TestCli:
 
         result = runner.invoke(app, ["cull", str(tmp_path)])
 
-        assert result.exit_code == 1
-        assert "culled.json" in result.stderr
+        assert isinstance(result.exception, DecisionsFileError)
+        assert "culled.json" in str(result.exception)
 
     def test_cull_runs_through_the_cli(self, photoset, tree) -> None:
         root = photoset({"photo_a.NEF": None}, {"good": ["photo_a"]})
@@ -61,7 +65,7 @@ class TestCli:
         result = runner.invoke(app, ["flop", str(root), "--dry-run"])
 
         assert result.exit_code == 0
-        assert "good/part_a/photo_a.NEF" in result.output
+        assert str(Path("good/part_a/photo_a.NEF")) in result.output
         assert "part_a/good/photo_a.NEF" in tree(root)
 
     def test_flop_reports_multiple_categories_and_exits(self, photoset) -> None:
@@ -69,5 +73,18 @@ class TestCli:
 
         result = runner.invoke(app, ["flop", str(root)])
 
-        assert result.exit_code == 1
-        assert "multiple categories" in result.stderr
+        assert isinstance(result.exception, FlopError)
+        assert "multiple categories" in str(result.exception)
+
+
+class TestMain:
+    def test_cullen_error_is_reported_and_exits(self, tmp_path, monkeypatch, capsys) -> None:
+        (tmp_path / "culled.json").write_text("not json at all")
+
+        monkeypatch.setattr("sys.argv", ["cullen", "cull", str(tmp_path)])
+
+        with pytest.raises(SystemExit) as info:
+            main()
+
+        assert info.value.code == 1
+        assert "culled.json" in capsys.readouterr().err

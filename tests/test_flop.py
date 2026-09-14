@@ -1,12 +1,11 @@
 from pathlib import Path
 
 import pytest
-
 from conftest import Photoset, Tree
 
-from cullen.commands.cull import cull
+from cullen._cli.commands.cull import cull
+from cullen._cli.commands.flop import flop
 from cullen.errors import DecisionsFileError, FlopError
-from cullen.commands.flop import flop
 
 
 class TestFlop:
@@ -187,8 +186,8 @@ class TestDryRun:
 
         output = capsys.readouterr().out
 
-        assert "part_a/good/photo_a.NEF" in output
-        assert "good/part_a/photo_a.NEF" in output
+        assert str(Path("part_a/good/photo_a.NEF")) in output
+        assert str(Path("good/part_a/photo_a.NEF")) in output
 
     def test_untouched_file_is_not_printed(self, photoset: Photoset, capsys: pytest.CaptureFixture[str]) -> None:
         root = photoset(
@@ -329,8 +328,8 @@ class TestCollisions:
 
         message = str(error.value)
 
-        assert "part_a/good/photo_a.NEF" in message
-        assert "good/part_a/photo_a.NEF" in message
+        assert str(Path("part_a/good/photo_a.NEF")) in message
+        assert str(Path("good/part_a/photo_a.NEF")) in message
 
     def test_same_name_in_different_folders_is_not_a_collision(self, photoset: Photoset, tree: Tree) -> None:
         root = photoset(

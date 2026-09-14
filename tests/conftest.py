@@ -50,6 +50,6 @@ def photoset(tmp_path: Path, create_files: Callable[[Path, FileTree], None]) -> 
 @pytest.fixture
 def tree() -> Tree:
     def _tree(root: Path) -> set[str]:
-        return {str(item.relative_to(root)) for item in root.rglob("*") if item.is_file()}
+        return {item.relative_to(root).as_posix() for item in root.rglob("*") if item.is_file()}
 
     return _tree

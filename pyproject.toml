@@ -4,21 +4,28 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "cullen"
-version = "0.1.0"
+version = "0.0.0"
 requires-python = ">=3.11"
 dependencies = [
+    "justin_utils",
     "typer",
     "rich",
-    "justin_utils",
 ]
+description = ""
+readme = "README.md"
+license = "MIT"
+authors = [{name = "Igor Djachenko"}]
 
 [project.scripts]
-cullen = "cullen.main:app"
+cullen = "cullen._cli.main:main"
 
 [project.optional-dependencies]
 test = [
     "pytest",
+    "ruff >= 0.15, < 0.16",
+    "mypy",
 ]
+release = ["build >= 1.5", "python-semantic-release >= 10.6"]
 
 [tool.setuptools.packages.find]
 where = ["src"]
@@ -29,3 +36,47 @@ testpaths = ["tests"]
 
 [tool.semantic_release]
 major_on_zero = false
+version_toml = ["pyproject.toml:project.version"]
+tag_format = "v{version}"
+branch = "master"
+commit_message = "chore(release): v{version} [skip ci]"
+allow_zero_version = true
+
+[project.urls]
+Homepage = "https://github.com/djachenko/cullen-cli"
+Source = "https://github.com/djachenko/cullen-cli"
+Documentation = "https://github.com/djachenko/cullen-cli#readme"
+Issues = "https://github.com/djachenko/cullen-cli/issues"
+
+[tool.ruff]
+line-length = 120
+
+[tool.ruff.lint]
+select = [
+    "E",    # pycodestyle
+    "W",    # pycodestyle warnings
+    "F",    # pyflakes
+    "I",    # isort
+    "UP",   # pyupgrade
+    "B",    # bugbear
+    "C4",   # comprehensions
+    "COM",  # trailing commas
+    "DTZ",  # naive datetime
+    "BLE",  # blind except
+    "ANN",  # annotations
+    "RUF",  # ruff-specific
+]
+ignore = [
+    "ANN401",  # Any is the honest annotation for type introspection and decorators
+    "C416",    # explicit comprehension reads better than a dict() cast
+    "C420",    # explicit comprehension reads better than dict.fromkeys
+]
+
+[tool.ruff.lint.flake8-bugbear]
+extend-immutable-calls = ["typer.Argument", "typer.Option"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["ANN"]
+
+[tool.mypy]
+strict = true

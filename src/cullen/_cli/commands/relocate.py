@@ -2,14 +2,12 @@ from contextlib import AbstractContextManager
 from pathlib import Path
 from typing import Annotated
 
-from typer import Typer, Argument
-
-from justin_utils.dictable import frompath, DictableError
+from justin_utils.dictable import DictableError, frompath
 from justin_utils.util import bfs
+from typer import Argument, Typer
 
-from cullen.decisions_file import DecisionsFile
-from cullen.errors import DecisionsFileError
-from cullen.ui import Console, Task, make_console
+from cullen import DecisionsFile, DecisionsFileError
+from cullen._cli.ui import Console, Task, make_console
 
 app = Typer()
 
@@ -34,7 +32,7 @@ class RelocateOutput:
 @app.command()
 def relocate(
         path: Annotated[Path, Argument()],
-        root: Annotated[Path, Argument()] = Path("/Volumes").expanduser(),
+        root: Annotated[Path, Argument()] = Path("/Volumes"),
 ) -> None:
     if not path.is_dir():
         raise DecisionsFileError(f"no such folder: {path}")
@@ -81,8 +79,8 @@ def relocate(
                     return []
 
             try:
-                # симлинки не разворачиваем: /Volumes/Macintosh HD ведёт на /,
-                # а внутри снова /Volumes — обход зациклился бы навсегда
+                # symlinks are not followed: /Volumes/Macintosh HD points to /,
+                # which contains /Volumes again, and the walk would never end
                 return [item for item in folder.iterdir() if item.is_dir() and not item.is_symlink()]
             except PermissionError:
                 return []

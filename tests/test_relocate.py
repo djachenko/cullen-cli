@@ -3,11 +3,10 @@ from collections.abc import Callable
 from pathlib import Path
 
 import pytest
-
 from conftest import FileTree
 
+from cullen._cli.commands.relocate import relocate
 from cullen.errors import DecisionsFileError
-from cullen.commands.relocate import relocate
 
 
 @pytest.fixture
@@ -94,7 +93,7 @@ class TestRelocate:
 
         stages.mkdir()
 
-        (downloads / "readme.txt").write_text("не json")
+        (downloads / "readme.txt").write_text("not json")
 
         relocate(downloads, stages)
 
