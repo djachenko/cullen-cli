@@ -20,7 +20,7 @@ class TestBoundary:
         offenders = [
             f"{file.relative_to(CLI_ROOT)}:{number}: {line.strip()}"
             for file in CLI_ROOT.rglob("*.py")
-            for number, line in enumerate(file.read_text().splitlines(), start=1)
+            for number, line in enumerate(file.read_text(encoding="utf-8").splitlines(), start=1)
             if INTERNAL_IMPORT.match(line)
         ]
 
