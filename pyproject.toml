@@ -22,6 +22,8 @@ cullen = "cullen.main:app"
 [project.optional-dependencies]
 test = [
     "pytest",
+    "ruff >= 0.15, < 0.16",
+    "mypy",
 ]
 release = ["build >= 1.5", "python-semantic-release >= 10.6"]
 
@@ -45,9 +47,6 @@ Homepage = "https://github.com/djachenko/cullen-cli"
 Source = "https://github.com/djachenko/cullen-cli"
 Documentation = "https://github.com/djachenko/cullen-cli#readme"
 Issues = "https://github.com/djachenko/cullen-cli/issues"
-
-[tool.hatch.build.targets.wheel]
-packages = ["src/cullen-cli"]
 
 [tool.mypy]
 strict = true
