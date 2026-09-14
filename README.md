@@ -2,6 +2,13 @@
 
 Applies photo culling decisions made in the Cullen iOS app to the source files on disk.
 
+## Install
+
+```
+pip install cullen          # library: from cullen import DecisionsFile, load
+pipx install "cullen[cli]"  # command
+```
+
 ## Commands
 
 ```
