@@ -1,3 +1,5 @@
+from pathlib import Path
+
 import pytest
 from typer.testing import CliRunner
 
@@ -63,7 +65,7 @@ class TestCli:
         result = runner.invoke(app, ["flop", str(root), "--dry-run"])
 
         assert result.exit_code == 0
-        assert "good/part_a/photo_a.NEF" in result.output
+        assert str(Path("good/part_a/photo_a.NEF")) in result.output
         assert "part_a/good/photo_a.NEF" in tree(root)
 
     def test_flop_reports_multiple_categories_and_exits(self, photoset) -> None:
