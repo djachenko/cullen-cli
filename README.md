@@ -14,8 +14,10 @@ pip install cullen    # library: from cullen import DecisionsFile, load
 ```
 cullen cull [PATHS...] [--file culled.json]   # sort sources into category folders
 cullen flop PATH [FILE] [--dry-run]           # move category folders back up
-cullen relocate PATH [ROOT]                   # find exported decision files and put them into their photosets
+cullen relocate [PATHS...] [--root ROOT]      # find exported decision files and put them into their photosets
 ```
+
+`relocate` takes folders and files (default: the current folder), looks for decision files among them, and walks `ROOT` (default: `/`, skipping system and hidden folders) for photosets with a `cullen/` folder inside.
 
 ## `culled.json`
 
