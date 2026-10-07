@@ -70,18 +70,18 @@ class RelocateOutput:
 
 
 class Relocator:
-    _SYSTEM_FOLDERS: ClassVar[frozenset[Path]] = frozenset({
-        Path("/Applications"),
-        Path("/Library"),
-        Path("/System"),
-        Path("/bin"),
-        Path("/cores"),
-        Path("/dev"),
-        Path("/opt"),
-        Path("/private"),
-        Path("/sbin"),
-        Path("/usr"),
-    })
+    _SYSTEM_FOLDERS: ClassVar[frozenset[Path]] = frozenset(map(Path, [
+        "/Applications",
+        "/Library",
+        "/System",
+        "/bin",
+        "/cores",
+        "/dev",
+        "/opt",
+        "/private",
+        "/sbin",
+        "/usr",
+    ]))
 
     def __init__(self, paths: list[Path], root: Path, output: RelocateOutput) -> None:
         self._paths = paths
