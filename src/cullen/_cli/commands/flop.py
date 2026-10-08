@@ -4,7 +4,7 @@ from typing import Annotated
 
 from typer import Argument, Option, Typer
 
-from cullen import SERVICE_FOLDERS, FlopError, load
+from cullen import SERVICE_FOLDERS, CullenDecisions, FlopError
 from cullen._cli.ui import Console, Task, make_console
 
 app = Typer()
@@ -38,7 +38,7 @@ def flop(
         file: Annotated[Path, Argument()] = Path("culled.json"),
         dry_run: Annotated[bool, Option("--dry-run")] = False,
 ) -> None:
-    categories = set(load(path / file).decisions)
+    categories = set(CullenDecisions.load(path / file).decisions)
 
     files = sorted(item for item in path.rglob("*") if item.is_file())
     moves = _plan(files, path, categories)
