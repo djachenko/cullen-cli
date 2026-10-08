@@ -1,60 +1,13 @@
-import sys
-from abc import ABC, abstractmethod
 from collections.abc import Iterator
-from contextlib import AbstractContextManager, contextmanager
+from contextlib import contextmanager
 
 from rich import console as rich_console
+from rich.live import Live
 from rich.progress import Progress, SpinnerColumn, TaskID, TextColumn, TimeElapsedColumn
 from rich.table import Table
+from rich.text import Text
 
-
-class Task(ABC):
-    @abstractmethod
-    def describe(self, description: str) -> None:
-        pass
-
-    @abstractmethod
-    def advance(self) -> None:
-        pass
-
-
-class Console(ABC):
-    @abstractmethod
-    def line(self, text: str, style: str | None = None) -> None:
-        pass
-
-    @abstractmethod
-    def summary(self, rows: list[tuple[str, str]]) -> None:
-        pass
-
-    @abstractmethod
-    def progress(self, description: str, total: int | None = None) -> AbstractContextManager[Task]:
-        pass
-
-
-class PlainTask(Task):
-    def describe(self, description: str) -> None:
-        print(description)
-
-    def advance(self) -> None:
-        pass
-
-
-class PlainConsole(Console):
-    def line(self, text: str, style: str | None = None) -> None:
-        print(text)
-
-    def summary(self, rows: list[tuple[str, str]]) -> None:
-        width = max((len(label) for label, _ in rows), default=0)
-
-        for label, value in rows:
-            print(f"{label.ljust(width)}  {value}")
-
-    @contextmanager
-    def progress(self, description: str, total: int | None = None) -> Iterator[Task]:
-        print(description)
-
-        yield PlainTask()
+from cullen._cli.ui.console import INDENT, Console, Stage, Task
 
 
 class RichTask(Task):
@@ -69,12 +22,36 @@ class RichTask(Task):
         self.__progress.advance(self.__task)
 
 
+class RichStage(Stage):
+    def __init__(self, console: rich_console.Console, live: Live) -> None:
+        self.__console = console
+        self.__live = live
+
+    def tree(self, lines: list[str]) -> None:
+        text = Text(style="dim")
+
+        for depth, line in enumerate(lines, start=1):
+            text.append(f"{INDENT * depth}{line}\n")
+
+        self.__live.update(text)
+
+    def line(self, text: str, style: str | None = None) -> None:
+        self.__console.print(f"{INDENT}{text}", style=style)
+
+
 class RichConsole(Console):
     def __init__(self) -> None:
-        self.__console = rich_console.Console()
+        self.__console = rich_console.Console(highlight=False)
 
     def line(self, text: str, style: str | None = None) -> None:
         self.__console.print(text, style=style)
+
+    @contextmanager
+    def stage(self, header: str) -> Iterator[Stage]:
+        self.__console.print(header, style="bold")
+
+        with Live(console=self.__console, transient=True) as live:
+            yield RichStage(self.__console, live)
 
     def summary(self, rows: list[tuple[str, str]]) -> None:
         table = Table(show_header=False, box=None)
@@ -103,10 +80,3 @@ class RichConsole(Console):
                 transient=True,
         ) as progress:
             yield RichTask(progress, progress.add_task(description, total=total))
-
-
-def make_console() -> Console:
-    if sys.stdout.isatty():
-        return RichConsole()
-
-    return PlainConsole()
