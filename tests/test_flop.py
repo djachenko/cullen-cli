@@ -3,9 +3,9 @@ from pathlib import Path
 import pytest
 from conftest import Photoset, Tree
 
+from cullen import CullenDecisionsError, FlopError
 from cullen._cli.commands.cull import cull
 from cullen._cli.commands.flop import flop
-from cullen.errors import DecisionsFileError, FlopError
 
 
 class TestFlop:
@@ -127,7 +127,7 @@ class TestCategories:
 
         root.mkdir()
 
-        with pytest.raises(DecisionsFileError):
+        with pytest.raises(CullenDecisionsError):
             flop(root)
 
 

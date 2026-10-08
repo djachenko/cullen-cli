@@ -5,8 +5,8 @@ import pytest
 from conftest import Photoset, Tree
 from justin_utils.testing import CreateFiles
 
+from cullen import CullenDecisionsError
 from cullen._cli.commands.cull import cull
-from cullen.errors import DecisionsFileError
 
 
 class TestCull:
@@ -283,7 +283,7 @@ class TestCull:
 
         (root / "culled.json").write_text("not json at all")
 
-        with pytest.raises(DecisionsFileError):
+        with pytest.raises(CullenDecisionsError):
             cull([root])
 
 

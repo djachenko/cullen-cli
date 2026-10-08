@@ -4,8 +4,8 @@ from pathlib import Path
 import pytest
 from justin_utils.testing import CreateFiles
 
+from cullen import CullenDecisionsError
 from cullen._cli.commands.relocate import relocate
-from cullen.errors import DecisionsFileError
 
 
 @pytest.fixture
@@ -29,11 +29,11 @@ class TestRelocate:
 
         stages.mkdir()
 
-        with pytest.raises(DecisionsFileError):
+        with pytest.raises(CullenDecisionsError):
             relocate([tmp_path / "nowhere"], stages)
 
     def test_missing_root_reports(self, downloads: Path, tmp_path: Path) -> None:
-        with pytest.raises(DecisionsFileError):
+        with pytest.raises(CullenDecisionsError):
             relocate([downloads], tmp_path / "nowhere")
 
     def test_empty_downloads_reports(self, capsys, downloads: Path, tmp_path: Path) -> None:

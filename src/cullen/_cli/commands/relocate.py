@@ -3,11 +3,10 @@ from contextlib import contextmanager
 from pathlib import Path
 from typing import Annotated, ClassVar
 
-from justin_utils.dictable import DictableError, frompath
 from justin_utils.util import bfs
 from typer import Argument, Option, Typer
 
-from cullen import DecisionsFile, DecisionsFileError
+from cullen import CullenDecisions, CullenDecisionsError
 from cullen._cli.ui import Console, Stage, make_console
 
 app = Typer()
@@ -109,8 +108,8 @@ class Relocator:
             for path in self._paths:
                 for item in self._candidates(path):
                     try:
-                        decisions_files[frompath(item, DecisionsFile).name] = item
-                    except DictableError:
+                        decisions_files[CullenDecisions.load(item).name] = item
+                    except CullenDecisionsError:
                         continue
 
                     discovery.found(item)
@@ -198,9 +197,9 @@ def relocate(
 
     for path in paths:
         if not path.exists():
-            raise DecisionsFileError(f"no such path: {path}")
+            raise CullenDecisionsError(f"no such path: {path}")
 
     if not root.is_dir():
-        raise DecisionsFileError(f"no such folder: {root}")
+        raise CullenDecisionsError(f"no such folder: {root}")
 
     Relocator(paths, root, RelocateOutput(make_console())).run()
