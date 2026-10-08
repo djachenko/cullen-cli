@@ -25,7 +25,7 @@ def cull(
 
     reports: list[Report] = []
 
-    for path in sorted(paths):
+    for path in sorted(path.resolve() for path in paths):
         try:
             decisions_file = load(path / file)
         except DecisionsFileMissingError as error:
