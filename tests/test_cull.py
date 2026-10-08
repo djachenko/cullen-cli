@@ -1,3 +1,4 @@
+import json
 from pathlib import Path
 
 import pytest
@@ -199,6 +200,28 @@ class TestCull:
         cull([root])
 
         assert tree(root) == {"photo_a.NEF"}
+
+    def test_multiple_paths_are_culled_in_one_run(self, tmp_path: Path, tree: Tree) -> None:
+        first = tmp_path / "first"
+        second = tmp_path / "second"
+        empty = tmp_path / "empty"
+
+        for root in (first, second, empty):
+            root.mkdir()
+
+            (root / "photo_a.NEF").touch()
+
+        for root in (first, second):
+            (root / "culled.json").write_text(json.dumps({
+                "name": root.name,
+                "decisions": {"good": ["photo_a"]},
+            }))
+
+        cull([empty, first, second])
+
+        assert "good/photo_a.NEF" in tree(first)
+        assert "good/photo_a.NEF" in tree(second)
+        assert tree(empty) == {"photo_a.NEF"}
 
     def test_malformed_decisions_file_raises(self, tmp_path: Path) -> None:
         root = tmp_path / "photoset"
