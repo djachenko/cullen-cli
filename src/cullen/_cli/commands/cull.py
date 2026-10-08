@@ -7,7 +7,7 @@ from typing import Annotated
 from justin_utils.util import bfs
 from typer import Argument, Option, Typer
 
-from cullen import SERVICE_FOLDERS, DecisionsFileMissingError, load
+from cullen import SERVICE_FOLDERS, CullenDecisions, CullenDecisionsMissingError
 from cullen._cli.ui import Console, Task, make_console
 
 app = Typer()
@@ -27,8 +27,8 @@ def cull(
 
     for path in sorted(paths):
         try:
-            decisions_file = load(path / file)
-        except DecisionsFileMissingError as error:
+            decisions_file = CullenDecisions.load(path / file)
+        except CullenDecisionsMissingError as error:
             output.skipped(path.name, error)
 
             continue
@@ -83,7 +83,7 @@ class CullOutput:
     def culling(self, description: str) -> AbstractContextManager[Task]:
         return self.__console.progress(description)
 
-    def skipped(self, name: str, error: DecisionsFileMissingError) -> None:
+    def skipped(self, name: str, error: CullenDecisionsMissingError) -> None:
         self.__console.line(f"{name}: {error}, skipped", style="yellow")
 
     def culled(self, name: str, report: Report) -> None:

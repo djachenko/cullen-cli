@@ -6,7 +6,7 @@ Applies photo culling decisions made in the Cullen iOS app to the source files o
 
 ```
 pipx install cullen   # command
-pip install cullen    # library: from cullen import DecisionsFile, load
+pip install cullen    # library: from cullen import CullenDecisions, CullenLinks
 ```
 
 ## Commands

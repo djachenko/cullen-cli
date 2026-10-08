@@ -4,8 +4,8 @@ import pytest
 from test_relocate import write_decisions
 from typer.testing import CliRunner
 
+from cullen import CullenDecisionsError, FlopError
 from cullen._cli.main import app, main
-from cullen.errors import DecisionsFileError, FlopError
 
 runner = CliRunner()
 
@@ -111,7 +111,7 @@ class TestCli:
 
         result = runner.invoke(app, ["cull", str(tmp_path)])
 
-        assert isinstance(result.exception, DecisionsFileError)
+        assert isinstance(result.exception, CullenDecisionsError)
         assert "culled.json" in str(result.exception)
 
     def test_cull_runs_through_the_cli(self, photoset, tree) -> None:

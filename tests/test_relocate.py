@@ -5,8 +5,8 @@ from pathlib import Path
 import pytest
 from conftest import FileTree
 
+from cullen import CullenDecisionsError
 from cullen._cli.commands.relocate import relocate
-from cullen.errors import DecisionsFileError
 
 
 @pytest.fixture
@@ -30,11 +30,11 @@ class TestRelocate:
 
         stages.mkdir()
 
-        with pytest.raises(DecisionsFileError):
+        with pytest.raises(CullenDecisionsError):
             relocate([tmp_path / "nowhere"], stages)
 
     def test_missing_root_reports(self, downloads: Path, tmp_path: Path) -> None:
-        with pytest.raises(DecisionsFileError):
+        with pytest.raises(CullenDecisionsError):
             relocate([downloads], tmp_path / "nowhere")
 
     def test_empty_downloads_reports(self, capsys, downloads: Path, tmp_path: Path) -> None:
@@ -170,3 +170,35 @@ class TestRelocate:
         assert (stages / "photoset/culled.json").is_file()
         assert not (stages / "photoset/inner/culled.json").exists()
         assert (downloads / "culled-2.json").is_file()
+
+    def test_moves_decisions_file_into_part(
+            self,
+            tmp_path: Path,
+            downloads: Path,
+            create_files: Callable[[Path, FileTree], None],
+    ) -> None:
+        stages = tmp_path / "stages"
+
+        create_files(stages, {"25.09.13.console_flight": {"1.singles": {"cullen": {}}, "2.pairs": {"cullen": {}}}})
+        write_decisions(downloads / "culled-1.json", "25.09.13.console_flight.1.singles")
+
+        relocate([downloads], stages)
+
+        assert (stages / "25.09.13.console_flight/1.singles/culled.json").is_file()
+        assert not (stages / "25.09.13.console_flight/2.pairs/culled.json").exists()
+        assert not (stages / "25.09.13.console_flight/culled.json").exists()
+
+    def test_part_name_alone_does_not_match(
+            self,
+            tmp_path: Path,
+            downloads: Path,
+            create_files: Callable[[Path, FileTree], None],
+    ) -> None:
+        stages = tmp_path / "stages"
+
+        create_files(stages, {"25.09.13.console_flight": {"1.singles": {"cullen": {}}}})
+        write_decisions(downloads / "culled-1.json", "25.09.13.other_set.1.singles")
+
+        relocate([downloads], stages)
+
+        assert (downloads / "culled-1.json").is_file()
