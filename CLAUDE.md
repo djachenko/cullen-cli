@@ -12,7 +12,7 @@
 |---|---|
 | `Cullen` (iOS) | контракт `culled.json`: пишет `ExportDecisionsUseCase.swift`, описан в `Cullen/.claude/skills/cli.md`. Изменение формата — правка в обоих репо |
 | `justin` | поставщик служебных папок (`justin/shared/models/photoset.py`, `justin/di/extractors.py`); будущий потребитель `cullen` как библиотеки |
-| `justin_utils` | `bfs`, `frompath`/`DictableDataclass` |
+| `justin_utils` | `bfs`, `frompath`/`DictableDataclass`, pytest-плагин `justin_utils.testing` (`create_files`) |
 
 Пакет на PyPI — `cullen`: `pipx install cullen` даёт команду, `pip install cullen` — библиотеку.
 
@@ -45,7 +45,7 @@ src/cullen/
     ├── ui/              # console.py: Console/Task/Stage ABC; rich.py, plain.py — реализации; make_console() по isatty
     └── commands/        # cull.py, flop.py, relocate.py — по сабаппу на файл
 tests/
-├── conftest.py          # фикстуры create_files (дерево-словарь), photoset, tree
+├── conftest.py          # фикстуры photoset, tree; create_files — из плагина justin_utils.testing (addopts в pyproject)
 ├── test_boundary.py     # граница SDK/CLI
 └── test_<модуль>.py     # по файлу на команду, плюс cli, ui, decisions_file
 ```

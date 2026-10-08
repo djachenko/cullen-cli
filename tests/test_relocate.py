@@ -1,9 +1,8 @@
 import json
-from collections.abc import Callable
 from pathlib import Path
 
 import pytest
-from conftest import FileTree
+from justin_utils.testing import CreateFiles
 
 from cullen._cli.commands.relocate import relocate
 from cullen.errors import DecisionsFileError
@@ -50,7 +49,7 @@ class TestRelocate:
             self,
             tmp_path: Path,
             downloads: Path,
-            create_files: Callable[[Path, FileTree], None],
+            create_files: CreateFiles,
     ) -> None:
         stages = tmp_path / "stages"
 
@@ -66,7 +65,7 @@ class TestRelocate:
             self,
             tmp_path: Path,
             downloads: Path,
-            create_files: Callable[[Path, FileTree], None],
+            create_files: CreateFiles,
     ) -> None:
         stages = tmp_path / "stages"
 
@@ -83,7 +82,7 @@ class TestRelocate:
             self,
             tmp_path: Path,
             downloads: Path,
-            create_files: Callable[[Path, FileTree], None],
+            create_files: CreateFiles,
     ) -> None:
         stages = tmp_path / "stages"
 
@@ -100,7 +99,7 @@ class TestRelocate:
             self,
             tmp_path: Path,
             downloads: Path,
-            create_files: Callable[[Path, FileTree], None],
+            create_files: CreateFiles,
     ) -> None:
         stages = tmp_path / "stages"
 
@@ -137,7 +136,7 @@ class TestRelocate:
             self,
             tmp_path: Path,
             downloads: Path,
-            create_files: Callable[[Path, FileTree], None],
+            create_files: CreateFiles,
     ) -> None:
         stages = tmp_path / "stages"
 
@@ -152,7 +151,7 @@ class TestRelocate:
             self,
             tmp_path: Path,
             downloads: Path,
-            create_files: Callable[[Path, FileTree], None],
+            create_files: CreateFiles,
     ) -> None:
         stages = tmp_path / "stages"
 
