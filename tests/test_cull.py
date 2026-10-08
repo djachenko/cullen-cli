@@ -243,3 +243,17 @@ class TestArguments:
         cull()
 
         assert "good/photo_a.NEF" in tree(root)
+
+    def test_cwd_is_reported_by_its_name(
+            self,
+            photoset: Photoset,
+            monkeypatch: "pytest.MonkeyPatch",
+            capsys: "pytest.CaptureFixture[str]",
+    ) -> None:
+        root = photoset({"photo_a.NEF": None}, {"good": ["photo_a"]})
+
+        monkeypatch.chdir(root)
+
+        cull()
+
+        assert f"{root.name}: 0 up, 1 down" in capsys.readouterr().out
