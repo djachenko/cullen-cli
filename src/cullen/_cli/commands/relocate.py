@@ -6,7 +6,7 @@ from typing import Annotated, ClassVar
 from justin_utils.util import bfs
 from typer import Argument, Option, Typer
 
-from cullen import CullenDecisions, CullenDecisionsError
+from cullen import CullenDecisions, CullenDecisionsError, photoset_id
 from cullen._cli.ui import Console, Stage, make_console
 
 app = Typer()
@@ -126,10 +126,12 @@ class Relocator:
 
                 scan.visiting(folder)
 
-                if folder.name in decisions_files and (folder / "cullen").is_dir():
-                    photosets[folder.name] = folder
+                if (folder / "cullen").is_dir():
+                    for name in (photoset_id(folder.name), photoset_id(folder.parent.name, folder.name)):
+                        if name in decisions_files:
+                            photosets[name] = folder
 
-                    return []
+                            return []
 
                 try:
                     return [item for item in folder.iterdir() if self._walkable(item)]
