@@ -6,8 +6,8 @@ from pathlib import Path
 def photoset_id(set_name: str, part_name: str | None = None) -> str:
     if part_name is None:
         return set_name
-
-    return f"{set_name}.{part_name}"
+    else:
+        return f"{set_name}.{part_name}"
 
 
 @dataclass(frozen=True)
