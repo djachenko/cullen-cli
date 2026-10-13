@@ -2,6 +2,19 @@
 
 <!-- version list -->
 
+## v0.2.1 (2026-10-13)
+
+### Bug Fixes
+
+- Report set name when culling current folder
+  ([`854d6e2`](https://github.com/djachenko/cullen-cli/commit/854d6e255b60ac96e4a7f34f0a75eebb0c059a01))
+
+### Documentation
+
+- Add project guide for Claude
+  ([`336cae9`](https://github.com/djachenko/cullen-cli/commit/336cae9a3cb7bf6be764c420428171e6f8b4f7b2))
+
+
 ## v0.2.0 (2026-10-08)
 
 ### Features
