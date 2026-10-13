@@ -1,7 +1,9 @@
+import json
 from pathlib import Path
 
 import pytest
 from conftest import Photoset, Tree
+from justin_utils.testing import CreateFiles
 
 from cullen._cli.commands.cull import cull
 from cullen.errors import DecisionsFileError
@@ -241,6 +243,38 @@ class TestCull:
         cull([root])
 
         assert tree(root) == {"photo_a.NEF"}
+
+    def test_multiple_paths_are_culled_in_one_run(
+            self,
+            tmp_path: Path,
+            create_files: CreateFiles,
+            tree: Tree,
+    ) -> None:
+        first = tmp_path / "first"
+        second = tmp_path / "second"
+        empty = tmp_path / "empty"
+
+        decisions = {"good": ["photo_a"]}
+
+        create_files(tmp_path, {
+            "first": {
+                "photo_a.NEF": None,
+                "culled.json": json.dumps({"name": "first", "decisions": decisions}),
+            },
+            "second": {
+                "photo_a.NEF": None,
+                "culled.json": json.dumps({"name": "second", "decisions": decisions}),
+            },
+            "empty": {
+                "photo_a.NEF": None,
+            },
+        })
+
+        cull([empty, first, second])
+
+        assert "good/photo_a.NEF" in tree(first)
+        assert "good/photo_a.NEF" in tree(second)
+        assert tree(empty) == {"photo_a.NEF"}
 
     def test_malformed_decisions_file_raises(self, tmp_path: Path) -> None:
         root = tmp_path / "photoset"
