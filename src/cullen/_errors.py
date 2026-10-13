@@ -2,11 +2,11 @@ class CullenError(Exception):
     pass
 
 
-class DecisionsFileError(CullenError):
+class CullenDecisionsError(CullenError):
     pass
 
 
-class DecisionsFileMissingError(DecisionsFileError):
+class CullenDecisionsMissingError(CullenDecisionsError):
     pass
 
 
