@@ -174,7 +174,7 @@ class TestRelocate:
             self,
             tmp_path: Path,
             downloads: Path,
-            create_files: Callable[[Path, FileTree], None],
+            create_files: CreateFiles,
     ) -> None:
         stages = tmp_path / "stages"
 
@@ -200,7 +200,7 @@ class TestRelocate:
             self,
             tmp_path: Path,
             downloads: Path,
-            create_files: Callable[[Path, FileTree], None],
+            create_files: CreateFiles,
     ) -> None:
         stages = tmp_path / "stages"
 
