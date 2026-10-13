@@ -189,6 +189,48 @@ class TestCull:
 
         assert (root / "photo_a").is_dir()
 
+    def test_progress_inside_category_is_lifted_and_kept_intact(self, photoset: Photoset, tree: Tree) -> None:
+        root = photoset(
+            {
+                "photo_a.NEF": None,
+                "photo_a.xmp": None,
+                "good": {
+                    "photo_b.NEF": None,
+                    "progress": {
+                        "photo_c.NEF": None,
+                        "closed": {"photo_d.NEF": None},
+                        "my_people": {"zharkov": {"photo_e.NEF": None}},
+                        "not_signed": {"photo_f.NEF": None},
+                    },
+                },
+                "bad": {"photo_g.NEF": None},
+                "timelapse": {"frames": {"photo_a.jpg": None}},
+                "cullen": {"photo_a.jpg": None},
+                "small": {"photo_b.jpg": None},
+            },
+            {
+                "good": ["photo_a", "photo_c", "photo_d", "photo_e", "photo_f"],
+                "bad": ["photo_b", "photo_g"],
+            },
+        )
+
+        cull(paths=[root])
+
+        assert tree(root) == {
+            "culled.json",
+            "good/photo_a.NEF",
+            "good/photo_a.xmp",
+            "bad/photo_b.NEF",
+            "bad/photo_g.NEF",
+            "progress/photo_c.NEF",
+            "progress/closed/photo_d.NEF",
+            "progress/my_people/zharkov/photo_e.NEF",
+            "progress/not_signed/photo_f.NEF",
+            "timelapse/frames/photo_a.jpg",
+            "cullen/photo_a.jpg",
+            "small/photo_b.jpg",
+        }
+
     def test_missing_decisions_file_is_skipped(self, tmp_path: Path, tree: Tree) -> None:
         root = tmp_path / "photoset"
 
