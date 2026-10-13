@@ -16,7 +16,10 @@ class TestSave:
         assert (tmp_path / "25.09.13.console_flight.1.singles.json").is_file()
 
     def test_writes_bare_list_of_name_and_url(self, tmp_path: Path) -> None:
-        CullenLinks("photoset", None, {"ZSC_1": "https://a", "ZSC_2": "https://b"}).save(tmp_path)
+        CullenLinks("photoset", None, {
+            "ZSC_1": "https://a",
+            "ZSC_2": "https://b",
+        }).save(tmp_path)
 
         assert json.loads((tmp_path / "photoset.json").read_text()) == [
             {"name": "ZSC_1", "url": "https://a"},

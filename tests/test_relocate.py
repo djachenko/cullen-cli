@@ -178,7 +178,16 @@ class TestRelocate:
     ) -> None:
         stages = tmp_path / "stages"
 
-        create_files(stages, {"25.09.13.console_flight": {"1.singles": {"cullen": {}}, "2.pairs": {"cullen": {}}}})
+        create_files(stages, {
+            "25.09.13.console_flight": {
+                "1.singles": {
+                    "cullen": {},
+                },
+                "2.pairs": {
+                    "cullen": {},
+                },
+            },
+        })
         write_decisions(downloads / "culled-1.json", "25.09.13.console_flight.1.singles")
 
         relocate([downloads], stages)
@@ -195,7 +204,13 @@ class TestRelocate:
     ) -> None:
         stages = tmp_path / "stages"
 
-        create_files(stages, {"25.09.13.console_flight": {"1.singles": {"cullen": {}}}})
+        create_files(stages, {
+            "25.09.13.console_flight": {
+                "1.singles": {
+                    "cullen": {},
+                },
+            },
+        })
         write_decisions(downloads / "culled-1.json", "25.09.13.other_set.1.singles")
 
         relocate([downloads], stages)
