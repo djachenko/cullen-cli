@@ -2,6 +2,14 @@
 
 <!-- version list -->
 
+## v0.3.1 (2026-10-19)
+
+### Bug Fixes
+
+- Show decisions file name instead of full path for skipped sets
+  ([`c2e5f8f`](https://github.com/djachenko/cullen-cli/commit/c2e5f8fb14d5c1b81e9d8330944022c655417e09))
+
+
 ## v0.3.0 (2026-10-13)
 
 ### Build System
