@@ -244,6 +244,22 @@ class TestCull:
 
         assert tree(root) == {"photo_a.NEF"}
 
+    def test_skipped_set_is_reported_without_full_path(
+            self,
+            tmp_path: Path,
+            capsys: "pytest.CaptureFixture[str]",
+    ) -> None:
+        root = tmp_path / "photoset"
+
+        root.mkdir()
+
+        cull([root])
+
+        output = capsys.readouterr().out
+
+        assert "photoset: no culled.json, skipped" in output
+        assert str(tmp_path) not in output
+
     def test_multiple_paths_are_culled_in_one_run(
             self,
             tmp_path: Path,

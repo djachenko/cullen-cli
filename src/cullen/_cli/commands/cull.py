@@ -28,8 +28,8 @@ def cull(
     for path in sorted(path.resolve() for path in paths):
         try:
             decisions_file = CullenDecisions.load(path / file)
-        except CullenDecisionsMissingError as error:
-            output.skipped(path.name, error)
+        except CullenDecisionsMissingError:
+            output.skipped(path.name, file)
 
             continue
 
@@ -83,8 +83,8 @@ class CullOutput:
     def culling(self, description: str) -> AbstractContextManager[Task]:
         return self.__console.progress(description)
 
-    def skipped(self, name: str, error: CullenDecisionsMissingError) -> None:
-        self.__console.line(f"{name}: {error}, skipped", style="yellow")
+    def skipped(self, name: str, file: Path) -> None:
+        self.__console.line(f"{name}: no {file}, skipped", style="yellow")
 
     def culled(self, name: str, report: Report) -> None:
         self.__console.line(f"{name}: {report.moved_up} up, {report.moved_down} down")
