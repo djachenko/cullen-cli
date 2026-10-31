@@ -2,6 +2,23 @@
 
 <!-- version list -->
 
+## v0.4.0 (2026-10-31)
+
+### Features
+
+- Expose links file name, create folder on save
+  ([`44235d3`](https://github.com/djachenko/cullen-cli/commit/44235d34ca4c728b19753206ee8734c2e77f0ff5))
+
+### Refactoring
+
+- Switch from justin_utils to justkitten
+  ([`4bd0def`](https://github.com/djachenko/cullen-cli/commit/4bd0defd61d26d554cf5db3ac5eec740b684bce8))
+
+### Breaking Changes
+
+- Photoset_id replaced by CullenPhotosetId; CullenLinks.links is list[tuple[str, str]]
+
+
 ## v0.3.1 (2026-10-19)
 
 ### Bug Fixes
