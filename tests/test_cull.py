@@ -3,7 +3,7 @@ from pathlib import Path
 
 import pytest
 from conftest import Photoset, Tree
-from justin_utils.testing import CreateFiles
+from justkitten.testing import CreateFiles
 
 from cullen import CullenDecisionsError
 from cullen._cli.commands.cull import cull

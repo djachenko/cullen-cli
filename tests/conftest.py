@@ -3,7 +3,7 @@ from collections.abc import Callable
 from pathlib import Path
 
 import pytest
-from justin_utils.testing import CreateFiles, FileTree
+from justkitten.testing import CreateFiles, FileTree
 
 Photoset = Callable[[FileTree, dict[str, list[str]]], Path]
 Tree = Callable[[Path], set[str]]

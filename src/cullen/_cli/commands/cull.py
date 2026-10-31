@@ -4,7 +4,7 @@ from functools import partial
 from pathlib import Path
 from typing import Annotated
 
-from justin_utils.util import bfs
+from justkitten.util import bfs
 from typer import Argument, Option, Typer
 
 from cullen import SERVICE_FOLDERS, CullenDecisions, CullenDecisionsMissingError

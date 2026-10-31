@@ -3,10 +3,10 @@ from contextlib import contextmanager
 from pathlib import Path
 from typing import Annotated, ClassVar
 
-from justin_utils.util import bfs
+from justkitten.util import bfs
 from typer import Argument, Option, Typer
 
-from cullen import CullenDecisions, CullenDecisionsError, photoset_id
+from cullen import CullenDecisions, CullenDecisionsError, CullenPhotosetId
 from cullen._cli.ui import Console, Stage, make_console
 
 app = Typer()
@@ -127,7 +127,7 @@ class Relocator:
                 scan.visiting(folder)
 
                 if (folder / "cullen").is_dir():
-                    for name in (photoset_id(folder.name), photoset_id(folder.parent.name, folder.name)):
+                    for name in CullenPhotosetId.candidates(folder):
                         if name in decisions_files:
                             photosets[name] = folder
 

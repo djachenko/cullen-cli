@@ -7,7 +7,7 @@ name = "cullen"
 version = "0.3.1"
 requires-python = ">=3.11"
 dependencies = [
-    "justin_utils >= 0.6.0",
+    "justkitten >= 0.9.0",
     "typer",
     "rich",
 ]
@@ -36,7 +36,7 @@ cullen = ["py.typed"]
 [tool.pytest.ini_options]
 pythonpath = ["src", "tests"]
 testpaths = ["tests"]
-addopts = "-p justin_utils.testing"
+addopts = "-p justkitten.testing"
 
 [tool.semantic_release]
 major_on_zero = false
@@ -74,6 +74,7 @@ ignore = [
     "ANN401",  # Any is the honest annotation for type introspection and decorators
     "C416",    # explicit comprehension reads better than a dict() cast
     "C420",    # explicit comprehension reads better than dict.fromkeys
+    "COM819",  # trailing comma inside a one-line tuple is allowed
 ]
 
 [tool.ruff.lint.flake8-bugbear]
