@@ -3,7 +3,7 @@ from contextlib import contextmanager
 from pathlib import Path
 from typing import Annotated, ClassVar
 
-from justin_utils.util import bfs
+from justkitten.util import bfs
 from typer import Argument, Option, Typer
 
 from cullen import CullenDecisions, CullenDecisionsError, photoset_id

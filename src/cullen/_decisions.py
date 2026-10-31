@@ -2,7 +2,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Self
 
-from justin_utils.dictable import DictableDataclass, DictableError, frompath
+from justkitten.dictable import DictableDataclass, DictableError, frompath
 
 from cullen._errors import CullenDecisionsError, CullenDecisionsMissingError
 
